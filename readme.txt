@@ -17,9 +17,9 @@ can be executed by running either recon.py or recon_tf.py. (As the Simplex based
 reduced to a center slice in systole before running it, whereas for the TensorFlow Version the whole volume and all frames are 
 reconstructed). 
 
-Dowload this code to /home/USERNAME/5dllr. We first build the docker image 
+Dowload this code to /home/USERNAME/5Dflow_LLR_BayesianMultipoint. We first build the docker image 
 
-	cd /home/USERNAME/5dllr/docker
+	cd /home/USERNAME/5Dflow_LLR_BayesianMultipoint/docker
 	docker build -t 5dllr/5dllr:latest .
 
 Of note, depending on your cuda installation you may need to adapt the environment variable ENV LD_LIBRARY_PATH in docker/dockerfile
@@ -29,7 +29,7 @@ before building the image to make TensorFlow work. (on my machine it was /usr/lo
 
 If the data for the demo code have not been downloaded to the program directory, we do so now
 
-    cd /home/USERNAME/5dllr/
+    cd /home/USERNAME/5Dflow_LLR_BayesianMultipoint/
     wget --header 'Host: files.de-1.osf.io' 'https://files.de-1.osf.io/v1/resources/36gdr/providers/osfstorage/5d5bf05c0e88ae0018c0981f?action=download&version=1&direct' --output-document 'data.h5'
 
 Then we start the image, mapping the home directory from the image system to the home folder in the image
@@ -42,4 +42,4 @@ Get <image_name> using
 
 and run recon in the image
 
-	docker exec -it <image_name> python3 /home/USERNAME/5dllr/recon.py
+	docker exec -it <image_name> python3 /home/USERNAME/5Dflow_LLR_BayesianMultipoint/recon.py
