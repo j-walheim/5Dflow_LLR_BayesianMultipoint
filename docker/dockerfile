@@ -1,0 +1,38 @@
+# take the latest GPU python3 tensorflow image as base
+FROM tensorflow/tensorflow:1.10.0-gpu-py3
+
+# maintainter from IBT
+MAINTAINER Jonas Walheim (walheim@biomed.ee.ethz.ch)
+
+##
+# Dependencies
+##
+
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends wget \
+	&& apt-get install -y openssh-server supervisor rpl pwgen \
+	&& apt-get install -y libsm6 libxext6 libfontconfig1 libxrender1 \
+	&& apt-get install -y python3-tk \
+	&& rm -rf /var/lib/apt/lists/*
+
+
+RUN pip --no-cache-dir install \
+        h5py \
+        jupyter \
+        matplotlib \
+        numpy \
+	numba \
+        scipy 
+
+ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+
+RUN echo $LD_LIBRARY_PATH
+
+#install BART requirements
+RUN apt-get update
+RUN apt-get -y install git
+RUN apt-get -y install gcc make libfftw3-dev liblapacke-dev libpng-dev libopenblas-dev
+RUN mkdir /usr/local/bin/bart
+RUN cd /usr/local/bin/bart
+RUN git clone https://github.com/mrirecon/bart /usr/local/bin/bart
+RUN cd /usr/local/bin/bart && make
